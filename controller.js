@@ -43,8 +43,8 @@ const saveStudent = async (req, res) => {
 // Update
 const updateStudent = async (req, res) => {
     try {
-        const { fname, newFname } = req.body;
-        const result = await Student.updateOne({ fname }, { fname: newFname, lname: "Parker" });
+        const { fname, newFname, newLname } = req.body;
+        const result = await Student.updateOne({ fname }, { fname: newFname, lname: newLname });
         res.json({ updated: result.modifiedCount > 0 });
     } catch (error) {
         res.json({ updated: false });
