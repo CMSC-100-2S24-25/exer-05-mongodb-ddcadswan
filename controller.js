@@ -1,8 +1,20 @@
 import mongoose from 'mongoose';
 
 
-await mongoose.connect('mongodb://127.0.0.1:27017/StudentDatabase');
+// await mongoose.connect('mongodb://127.0.0.1:27017/StudentDatabase');
+async function connectDB() {
+    try {
+        await mongoose.connect('mongodb://127.0.0.1:27017/StudentDatabase', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+        console.log("Connected to MongoDB");
+    } catch (error) {
+        console.error("MongoDB connection error:", error);
+    }
+}
 
+connectDB();
 
 // Student Model
 const Student = mongoose.model('studentData', {
@@ -10,7 +22,7 @@ const Student = mongoose.model('studentData', {
     fname: String,
     lname: String,
     age: Number
-});
+}, 'studentData');
 
 // Homepage
 const homepage = (req, res) => {
@@ -54,7 +66,7 @@ const removeUser = async (req, res) => {
 const removeAll = async (req, res) => {
     try {
         const result = await Student.deleteMany({});
-        res.json({ deleted: result.deletedCount > 0 });
+        res.json({ deleted: result.deletedCount > 0, count: result.deletedCount});
     } catch (error) {
         res.json({ deleted: false });
     }

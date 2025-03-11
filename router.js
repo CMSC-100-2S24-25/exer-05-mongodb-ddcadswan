@@ -1,4 +1,4 @@
-import {homepage} from './controller.js';
+import { homepage, saveStudent, updateStudent, removeUser, removeAll, findUser, getMembers } from './controller.js';
 
 const router = (app) => {
     app.get('/', homepage);
